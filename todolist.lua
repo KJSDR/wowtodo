@@ -132,3 +132,4 @@ frame:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
 
 -- Initial update to display any items
 UpdateList()
+
