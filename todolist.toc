@@ -1,9 +1,0 @@
-## Interface: 110002
-## Title: To Do List
-## Notes: Simple to-do list addon
-## Author: Fyuryus
-## Version: 1.0
-
-
-todolist.lua
-todolist.xml
