@@ -3,10 +3,20 @@ frame:SetSize(300, 400)
 frame:SetPoint("CENTER")
 frame:Hide()
 
--- Create a transparent dark gray gradient background
-local bg1 = frame:CreateTexture(nil, "BACKGROUND")
-bg1:SetAllPoints(frame)
-bg1:SetColorTexture(0.2, 0.2, 0.2, 0.7) -- Dark gray with some transparency
+-- Create a background texture
+local bgTexture = frame:CreateTexture(nil, "BACKGROUND")
+bgTexture:SetTexture("Interface\\DialogFrame\\UI-DialogBox-Background")
+bgTexture:SetAllPoints(frame)
+
+-- Add a border
+local border = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+border:SetPoint("TOPLEFT", -5, 5)
+border:SetPoint("BOTTOMRIGHT", 5, -5)
+border:SetBackdrop({
+    edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+    edgeSize = 16,
+    insets = { left = 5, right = 5, top = 5, bottom = 5 }
+})
 
 -- Create a title
 local title = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
@@ -46,6 +56,12 @@ local function UpdateList()
             item.checked = self:GetChecked()
         end)
 
+        -- Custom checkbox textures
+        checkbox:SetNormalTexture("Interface\\Buttons\\UI-CheckBox-Up")
+        checkbox:SetPushedTexture("Interface\\Buttons\\UI-CheckBox-Down")
+        checkbox:SetHighlightTexture("Interface\\Buttons\\UI-CheckBox-Highlight")
+        checkbox:SetCheckedTexture("Interface\\Buttons\\UI-CheckBox-Checked")
+
         -- Create a remove button for each item
         local removeButton = CreateFrame("Button", nil, contentFrame, "UIPanelButtonTemplate")
         removeButton:SetSize(25, 20)
@@ -84,23 +100,11 @@ editBox:SetScript("OnEnterPressed", function(self)
     end
 end)
 
--- Create increase size button
-local increaseButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-increaseButton:SetSize(25, 25)
-increaseButton:SetText("+")
-increaseButton:SetPoint("TOPRIGHT", -10, -30)
-
-increaseButton:SetScript("OnClick", function()
-    local width, height = frame:GetSize()
-    frame:SetSize(width + 20, height + 20) -- Increase size by 20
-    UpdateList() -- Update list to adjust content
-end)
-
--- Create decrease size button
+-- Create decrease size button (on the left)
 local decreaseButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
 decreaseButton:SetSize(25, 25)
 decreaseButton:SetText("-")
-decreaseButton:SetPoint("TOPRIGHT", -10, -60)
+decreaseButton:SetPoint("TOPRIGHT", -35, -10)
 
 decreaseButton:SetScript("OnClick", function()
     local width, height = frame:GetSize()
@@ -108,6 +112,18 @@ decreaseButton:SetScript("OnClick", function()
         frame:SetSize(width - 20, height - 20) -- Decrease size by 20
         UpdateList() -- Update list to adjust content
     end
+end)
+
+-- Create increase size button (on the right)
+local increaseButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+increaseButton:SetSize(25, 25)
+increaseButton:SetText("+")
+increaseButton:SetPoint("TOPRIGHT", -5, -10)
+
+increaseButton:SetScript("OnClick", function()
+    local width, height = frame:GetSize()
+    frame:SetSize(width + 20, height + 20) -- Increase size by 20
+    UpdateList() -- Update list to adjust content
 end)
 
 -- Toggle button for the to-do list
@@ -132,4 +148,3 @@ frame:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
 
 -- Initial update to display any items
 UpdateList()
-
