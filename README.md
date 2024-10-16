@@ -3,9 +3,9 @@
 Enhance your gaming experience with our intuitive To-Do List addon! This tool allows you to effortlessly keep track of your tasks within the game.
 
 Features:
-Add & Remove Items: Easily manage your tasks by adding new items or deleting completed ones.
-Completion Checkmarks: Mark tasks as completed with a simple click.
-Customizable Window: Resize and drag the list to your preferred location on the screen.
+-Add & Remove Items: Easily manage your tasks by adding new items or deleting completed ones.
+-Completion Checkmarks: Mark tasks as completed with a simple click.
+-Customizable Window: Resize and drag the list to your preferred location on the screen.
 
 Stay organized and never miss a task again!
 
