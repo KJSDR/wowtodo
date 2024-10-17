@@ -14,7 +14,7 @@ The ToDo List Addon is a lightweight and user-friendly addon for World of Warcra
 
 ## Installation
 
-1. Extract the files into your World of Warcraft `AddOns` folder, typically located at:
+1. Extract the files into your World of Warcraft `AddOns` folder.
 2. Launch World of Warcraft and enable the ToDo List Addon in the AddOns menu.
 
 ## Usage
