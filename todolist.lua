@@ -2,6 +2,7 @@ local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_LOGIN")
 
 f:SetScript("OnEvent", function()
+   
     todolistDB = todolistDB or { items = {} }
     todoItems = todolistDB.items
 
@@ -33,11 +34,11 @@ f:SetScript("OnEvent", function()
     title:SetText("To Do List")
 
     local scrollFrame = CreateFrame("ScrollFrame", nil, frame, "UIPanelScrollFrameTemplate")
-    scrollFrame:SetSize(280, 320)
+    scrollFrame:SetSize(280, 300) 
     scrollFrame:SetPoint("TOP", 0, -40)
 
     local contentFrame = CreateFrame("Frame", nil, scrollFrame)
-    contentFrame:SetSize(280, 320)
+    contentFrame:SetSize(280, 300)
     scrollFrame:SetScrollChild(contentFrame)
 
     local function SaveItems()
@@ -49,9 +50,13 @@ f:SetScript("OnEvent", function()
             child:Hide()
         end
 
+        local itemHeight = 20 
+        local spacing = 5   
+        local totalHeight = 0 
+        
         for i, item in ipairs(todoItems) do
             local checkbox = CreateFrame("CheckButton", nil, contentFrame, "ChatConfigCheckButtonTemplate")
-            checkbox:SetPoint("TOPLEFT", 10, -20 * (i - 1))
+            checkbox:SetPoint("TOPLEFT", 10, -totalHeight - spacing)
             checkbox.text = checkbox:CreateFontString(nil, "OVERLAY", "GameFontNormal")
             checkbox.text:SetPoint("LEFT", checkbox, "RIGHT", 5)
             checkbox.text:SetText(item.text)
@@ -59,7 +64,7 @@ f:SetScript("OnEvent", function()
 
             checkbox:SetScript("OnClick", function(self)
                 item.checked = self:GetChecked()
-                SaveItems() 
+                SaveItems()
             end)
 
             local removeButton = CreateFrame("Button", nil, contentFrame, "UIPanelButtonTemplate")
@@ -75,16 +80,39 @@ f:SetScript("OnEvent", function()
             end)
 
             removeButton:SetFrameLevel(checkbox:GetFrameLevel() + 1)
+
+            totalHeight = totalHeight + itemHeight + spacing
         end
 
-        local frameWidth, frameHeight = frame:GetSize()
-        contentFrame:SetSize(frameWidth - 20, frameHeight - 80)
-        scrollFrame:SetSize(frameWidth - 20, frameHeight - 40)
+        
+        contentFrame:SetSize(frame:GetWidth() - 20, totalHeight)
+        scrollFrame:SetSize(frame:GetWidth() - 20, 300)
+
+        
+        if totalHeight < 300 then
+            contentFrame:SetHeight(totalHeight)
+        else
+            contentFrame:SetHeight(300)
+        end
     end
 
-    local editBox = CreateFrame("EditBox", nil, frame)
+    
+    local editBoxBackground = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+    editBoxBackground:SetSize(210, 25)
+    editBoxBackground:SetPoint("BOTTOMLEFT", 10, 10)
+    editBoxBackground:SetBackdrop({
+        bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+        edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+        edgeSize = 16,
+        insets = { left = 5, right = 5, top = 5, bottom = 5 }
+    })
+
+    editBoxBackground:SetBackdropColor(0, 0, 0, 0.5)
+
+    
+    local editBox = CreateFrame("EditBox", nil, editBoxBackground)
     editBox:SetSize(200, 20)
-    editBox:SetPoint("BOTTOM", 0, 10)
+    editBox:SetPoint("CENTER")
     editBox:SetFontObject("GameFontNormal")
     editBox:SetAutoFocus(false)
     editBox:SetScript("OnEnterPressed", function(self)
@@ -96,6 +124,8 @@ f:SetScript("OnEvent", function()
             SaveItems()
         end
     end)
+
+    editBox:SetTextInsets(5, 5, 0, 0)
 
     local decreaseButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
     decreaseButton:SetSize(25, 25)
