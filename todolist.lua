@@ -84,11 +84,9 @@ f:SetScript("OnEvent", function()
             totalHeight = totalHeight + itemHeight + spacing
         end
 
-        
         contentFrame:SetSize(frame:GetWidth() - 20, totalHeight)
         scrollFrame:SetSize(frame:GetWidth() - 20, 300)
 
-        
         if totalHeight < 300 then
             contentFrame:SetHeight(totalHeight)
         else
@@ -96,7 +94,6 @@ f:SetScript("OnEvent", function()
         end
     end
 
-    
     local editBoxBackground = CreateFrame("Frame", nil, frame, "BackdropTemplate")
     editBoxBackground:SetSize(210, 25)
     editBoxBackground:SetPoint("BOTTOMLEFT", 10, 10)
@@ -109,7 +106,6 @@ f:SetScript("OnEvent", function()
 
     editBoxBackground:SetBackdropColor(0, 0, 0, 0.5)
 
-    
     local editBox = CreateFrame("EditBox", nil, editBoxBackground)
     editBox:SetSize(200, 20)
     editBox:SetPoint("CENTER")
@@ -127,28 +123,39 @@ f:SetScript("OnEvent", function()
 
     editBox:SetTextInsets(5, 5, 0, 0)
 
-    local decreaseButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-    decreaseButton:SetSize(25, 25)
-    decreaseButton:SetText("-")
-    decreaseButton:SetPoint("TOPRIGHT", -35, -10)
+    
+    local resizeHandle = CreateFrame("Frame", nil, frame)
+    resizeHandle:SetSize(16, 16) -- Size of the handle
+    resizeHandle:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
+    resizeHandle:EnableMouse(true)
 
-    decreaseButton:SetScript("OnClick", function()
-        local width, height = frame:GetSize()
-        if width > 200 and height > 200 then
-            frame:SetSize(width - 20, height - 20)
-            UpdateList()
-        end
+    
+    local handleTexture = resizeHandle:CreateTexture(nil, "OVERLAY")
+    handleTexture:SetAllPoints()
+    handleTexture:SetColorTexture(0.2, 0.2, 0.2, 0.5) 
+
+    resizeHandle:SetScript("OnMouseDown", function(self)
+        frame:StartSizing("BOTTOMRIGHT")
     end)
 
-    local increaseButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-    increaseButton:SetSize(25, 25)
-    increaseButton:SetText("+")
-    increaseButton:SetPoint("TOPRIGHT", -5, -10)
-
-    increaseButton:SetScript("OnClick", function()
-        local width, height = frame:GetSize()
-        frame:SetSize(width + 20, height + 20) 
+    resizeHandle:SetScript("OnMouseUp", function(self)
+        frame:StopMovingOrSizing()
         UpdateList() 
+    end)
+
+    
+    frame:SetResizable(true)
+
+    
+    frame:SetScript("OnSizeChanged", function(self)
+        local width = self:GetWidth()
+        
+        
+        editBoxBackground:SetWidth(width - 20)
+        editBox:SetWidth(width - 30)
+
+        scrollFrame:SetSize(width - 20, 300)
+        UpdateList()
     end)
 
     SLASH_TODOLIST1 = "/todolist"
