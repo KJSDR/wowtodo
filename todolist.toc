@@ -3,6 +3,7 @@
 ## Notes: Simple to-do list addon
 ## Author: Fyuryus
 ## Version: 1.0
+## SavedVariables: todolistDB
 
 todolist.lua
 
