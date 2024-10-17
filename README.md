@@ -24,4 +24,6 @@ The ToDo List Addon is a lightweight and user-friendly addon for World of Warcra
 - Click the checkboxes to mark tasks as complete or incomplete.
 - Use the "-" button next to each task to remove it from the list.
 
+## Screenshot
+
 <img width="396" alt="Capture d’écran 2024-10-17 à 12 56 41" src="https://github.com/user-attachments/assets/ee55f8ad-0b8e-4ce6-a79a-e08d1b02e97c">
