@@ -2,7 +2,7 @@
 
 ## Overview
 
-The ToDo List Addon is a lightweight and user-friendly addon for World of Warcraft that allows players to manage their tasks efficiently within the game. With a simple interface, you can add, check off, and remove items from your to-do list, helping you stay organized while enjoying your adventures.
+The ToDo List Addon is a lightweight and user-friendly addon for World of Warcraft that allows players to manage their tasks efficiently within the game. With a simple interface, you can add, check off, and remove items from your to-do list, helping you stay organized.
 
 ## Features
 
