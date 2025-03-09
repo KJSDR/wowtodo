@@ -1,4 +1,4 @@
-# ToDo List Addon for WoW
+# ToDo List Addon for World of Warcraft
 
 ## Overview
 
